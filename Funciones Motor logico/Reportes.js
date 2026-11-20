@@ -13,7 +13,28 @@ function listarTodo(datos) {
 }
 
 // ---------- NIVEL 2 · Reportes ----------
+export function totalGeneral(datos) {
+    //Lauren
+    let total = 0;
+
+    for (const servicio of datos.values()) {
+        total += servicio.Monto;
+    }
+
+    return total;
+}
+
+export function promedio(datos) {
+    //Joimar
+    if (datos.size === 0) {
+        return 0;
+    }
+
+    return totalGeneral(datos) / datos.size;
+}
+
 function registroMayor(datos) {
+    //Juan-cuartas
     let registros = datos;
     let mayorMonto = 0;
     let tableMayormonto = null;
@@ -28,6 +49,7 @@ function registroMayor(datos) {
 }
 
 function totalesPorCategoria(datos) {
+    //Juan-cuartas
     let registros = datos
     let categorias = new Map(
         [
@@ -58,8 +80,54 @@ function totalesPorCategoria(datos) {
 
 
 // ---------- NIVEL 3 · Set & Map ----------
+//Recurrentes lentos
+export function recurrentesLento(datos) {
+    //Jhoimar
+    const recurrentes = new Set();
+
+    for (const servicio of datos.values()) {
+        let apariciones = 0;
+
+        for (const otroServicio of datos.values()) {
+            if (otroServicio.ID_Vehiculo === servicio.ID_Vehiculo) {
+                apariciones++;
+            }
+        }
+
+        if (apariciones > 1) {
+            recurrentes.add(servicio.ID_Vehiculo);
+        }
+    }
+
+    return [...recurrentes];
+}
+
+
+//Recurrentes rapidos
+export function recurrentesRapido(datos) {
+    //Jhoimar
+    const aparicionesPorVehiculo = new Map();
+
+    for (const servicio of datos.values()) {
+        const idVehiculo = servicio.ID_Vehiculo;
+        const apariciones = aparicionesPorVehiculo.get(idVehiculo) ?? 0;
+        aparicionesPorVehiculo.set(idVehiculo, apariciones + 1);
+    }
+
+    const recurrentes = [];
+
+    for (const [idVehiculo, apariciones] of aparicionesPorVehiculo) {
+        if (apariciones > 1) {
+            recurrentes.push(idVehiculo);
+        }
+    }
+
+    return recurrentes;
+}
+
 
 function parQueSuma(datos, objetivo) {
+    //Juan-cuartas
     let valorObjetivo = objetivo;
     let registros = datos;
     let parSumado = new Map(
@@ -81,9 +149,31 @@ function parQueSuma(datos, objetivo) {
     }
     return [...parSumado.values()];
 }
+// ---------- NIVEL 4 · Cola y pila ----------
 
 
+
+// Se esta definiendo la asignacion de tareas para los integrantes y haciendo feedback antes de construir
+
+
+// ---------- Zona de pruebas ----------
+//Funciones: Juan Cuartas
 mostrarRegistro(lista_registros);
-console.table(registroMayor(lista_registros));
+mostrarRegistro(new Set()); //Prueba array vacio, funcional.
+console.table(registroMayor(lista_registros)); 
+console.table(registroMayor(new Set())); //Prueba con array vacío
 console.table(totalesPorCategoria(lista_registros));
-console.table(parQueSuma(lista_registros, 80000));
+console.table(totalesPorCategoria(new Set())); //Prueba con array vacío, funcional.
+console.table(parQueSuma(lista_registros, 80000)); //Devuelve null o los dos valores, funcional.
+
+//Funciones: Jhoimar
+console.log(`Promedio: ${promedio(serviciosHistoricos)}`);
+console.log(`Promedio sin servicios: ${promedio(new Set())}`); //Prueba con array vacío, funcional.
+console.log(`Recurrentes lento: ${JSON.stringify(recurrentesLento(serviciosHistoricos))}`);
+console.log(`Recurrentes rápido: ${JSON.stringify(recurrentesRapido(serviciosHistoricos))}`);
+console.log(`Recurrentes lento sin servicios: ${JSON.stringify(recurrentesLento(new Set()))}`); //Prueba con array vacío, funcional.
+console.log(`Recurrentes rápido sin servicios: ${JSON.stringify(recurrentesRapido(new Set()))}`); //Prueba con array vacío, funcional.
+
+//Funciones: Lauren
+console.log(`Total: $${totalGeneral(serviciosHistoricos)}`); 
+console.log(`Total: $${totalGeneral(new Set())}`); // Prueba con array vacío, funcional.
