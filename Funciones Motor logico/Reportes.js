@@ -1,16 +1,23 @@
 import { serviciosHistoricos } from "./Db._dicionarios.js";
 //console.table(serviciosHistoricos);
 let lista_registros = listarTodo(serviciosHistoricos);
+
+
 // ---------- NIVEL 1 · Datos ----------
 function mostrarRegistro(registro) {
+    //Juan-cuartas
     return console.table(registro);
 }
 
 function listarTodo(datos) {
+    //Juan-cuartas
     let registros = datos
     let valores = [...registros.values()]
     return valores;
 }
+
+
+
 
 // ---------- NIVEL 2 · Reportes ----------
 export function totalGeneral(datos) {
@@ -159,21 +166,26 @@ function parQueSuma(datos, objetivo) {
 // ---------- Zona de pruebas ----------
 //Funciones: Juan Cuartas
 mostrarRegistro(lista_registros);
-mostrarRegistro(new Set()); //Prueba array vacio, funcional.
 console.table(registroMayor(lista_registros)); 
-console.table(registroMayor(new Set())); //Prueba con array vacío
 console.table(totalesPorCategoria(lista_registros));
-console.table(totalesPorCategoria(new Set())); //Prueba con array vacío, funcional.
 console.table(parQueSuma(lista_registros, 80000)); //Devuelve null o los dos valores, funcional.
+
+mostrarRegistro(new Set()); //Prueba array vacio, funcional.
+console.table(registroMayor(new Set())); //Prueba con array vacío, funcional devuelve null.
+console.table(totalesPorCategoria(new Set())); //Prueba con array vacío, funcional.
+
 
 //Funciones: Jhoimar
 console.log(`Promedio: ${promedio(serviciosHistoricos)}`);
-console.log(`Promedio sin servicios: ${promedio(new Set())}`); //Prueba con array vacío, funcional.
 console.log(`Recurrentes lento: ${JSON.stringify(recurrentesLento(serviciosHistoricos))}`);
 console.log(`Recurrentes rápido: ${JSON.stringify(recurrentesRapido(serviciosHistoricos))}`);
+
+console.log(`Promedio sin servicios: ${promedio(new Set())}`); //Prueba con array vacío, funcional.
 console.log(`Recurrentes lento sin servicios: ${JSON.stringify(recurrentesLento(new Set()))}`); //Prueba con array vacío, funcional.
 console.log(`Recurrentes rápido sin servicios: ${JSON.stringify(recurrentesRapido(new Set()))}`); //Prueba con array vacío, funcional.
 
+
 //Funciones: Lauren
 console.log(`Total: $${totalGeneral(serviciosHistoricos)}`); 
+
 console.log(`Total: $${totalGeneral(new Set())}`); // Prueba con array vacío, funcional.
