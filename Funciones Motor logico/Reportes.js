@@ -56,6 +56,34 @@ function totalesPorCategoria(datos) {
     return categorias;
 }
 
+
+// ---------- NIVEL 3 · Set & Map ----------
+
+function parQueSuma(datos, objetivo) {
+    let valorObjetivo = objetivo;
+    let registros = datos;
+    let parSumado = new Map(
+        [
+            ["Registro_1", null],
+            ["Registro_2", null]
+        ]
+    );
+    //console.log(parSumado);
+    for (const registro of registros) {
+        //console.log(registro.Monto);
+        if (registro.Monto === valorObjetivo) {
+            if(parSumado.get("Registro_1") === null) {
+                parSumado.set("Registro_1", registro);
+            } else {
+                parSumado.set("Registro_2", registro);
+            }
+        }
+    }
+    return [...parSumado.values()];
+}
+
+
 mostrarRegistro(lista_registros);
 console.table(registroMayor(lista_registros));
 console.table(totalesPorCategoria(lista_registros));
+console.table(parQueSuma(lista_registros, 80000));
