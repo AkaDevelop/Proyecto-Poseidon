@@ -3,6 +3,7 @@ import promptSync from 'prompt-sync'; //Si se está usando ES Modules (import y 
 export const prompts = promptSync(); //genera conflicto en las importaciones de los modulos, por tal razon se deja comentado y se importa con el método ES Modules.
 
 export const serviciosHistoricos = new Map([
+    // Angel
     ["AD123", {
         ID_Vehiculo: "ABC123",
         ID_TipoServicio: 1,
@@ -176,6 +177,7 @@ export const serviciosHistoricos = new Map([
 
 
 export const vehiculos = new Map([
+     // Angel
     ["ABC123", {
         Tipo: "Carro",
         Numero_Tel: "3001234567"
@@ -228,6 +230,7 @@ export const vehiculos = new Map([
 
 
 export const tipoServicio = new Map([
+     // Angel
     [1, {
         Tipo_Serv: "Polichada",
         Precio_Serv: 35000

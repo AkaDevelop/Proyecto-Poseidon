@@ -1,4 +1,5 @@
 import { serviciosHistoricos } from "./Db._dicionarios.js";
+import { vehiculos } from "./Db._dicionarios.js";
 //console.table(serviciosHistoricos);
 let lista_registros = listarTodo(serviciosHistoricos);
 
@@ -15,8 +16,6 @@ function listarTodo(datos) {
     let valores = [...registros.values()]
     return valores;
 }
-
-
 
 
 // ---------- NIVEL 2 · Reportes ----------
@@ -55,6 +54,10 @@ function registroMayor(datos) {
     return tableMayormonto;
 }
 
+function filtrarPorCategoria(datos, categoria) {
+    //Angel: Pendiente
+}
+
 function totalesPorCategoria(datos) {
     //Juan-cuartas
     let registros = datos
@@ -87,6 +90,16 @@ function totalesPorCategoria(datos) {
 
 
 // ---------- NIVEL 3 · Set & Map ----------
+export function personasUnicas(datos) {
+    const personas = new Set();
+
+    for (const vehiculo of datos.values()) {
+        personas.add(vehiculo.Numero_Tel);
+    }
+
+    return personas.size;
+}
+
 //Recurrentes lentos
 export function recurrentesLento(datos) {
     //Jhoimar
@@ -132,6 +145,9 @@ export function recurrentesRapido(datos) {
     return recurrentes;
 }
 
+function categoriaEstrella(datos) {
+    //Angel: pendiente
+}
 
 function parQueSuma(datos, objetivo) {
     //Juan-cuartas
@@ -160,7 +176,7 @@ function parQueSuma(datos, objetivo) {
 
 
 
-// Se esta definiendo la asignacion de tareas para los integrantes y haciendo feedback antes de construir
+// Se esta definiendo la asignacion de tareas para los integrantes en este nivel, haremos feedback antes de.
 
 
 // ---------- Zona de pruebas ----------
@@ -168,12 +184,12 @@ function parQueSuma(datos, objetivo) {
 mostrarRegistro(lista_registros);
 console.table(registroMayor(lista_registros)); 
 console.table(totalesPorCategoria(lista_registros));
-console.table(parQueSuma(lista_registros, 80000)); //Devuelve null o los dos valores, funcional.
+console.table(parQueSuma(lista_registros, 40000)); 
 
 mostrarRegistro(new Set()); //Prueba array vacio, funcional.
 console.table(registroMayor(new Set())); //Prueba con array vacío, funcional devuelve null.
 console.table(totalesPorCategoria(new Set())); //Prueba con array vacío, funcional.
-
+console.table(parQueSuma(lista_registros, 0)); //Devuelve null o los dos valores, funcional.
 
 //Funciones: Jhoimar
 console.log(`Promedio: ${promedio(serviciosHistoricos)}`);
@@ -187,5 +203,9 @@ console.log(`Recurrentes rápido sin servicios: ${JSON.stringify(recurrentesRapi
 
 //Funciones: Lauren
 console.log(`Total: $${totalGeneral(serviciosHistoricos)}`); 
+console.log(`Personas diferentes: ${personasUnicas(vehiculos)}`);
 
+console.log(`Personas diferentes: ${personasUnicas(new Set())}`); // Prueba con array vacio, funcional.
 console.log(`Total: $${totalGeneral(new Set())}`); // Prueba con array vacío, funcional.
+
+//Funciones: Angel - Pendiente.
