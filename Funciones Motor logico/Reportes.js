@@ -1,5 +1,9 @@
-import { serviciosHistoricos } from "./Db._dicionarios.js";
-import { vehiculos } from "./Db._dicionarios.js";
+import { serviciosHistoricos,
+        vehiculos,  
+        tipoServicio,
+
+ } from "./Db._dicionarios.js";
+
 //console.table(serviciosHistoricos);
 let lista_registros = listarTodo(serviciosHistoricos);
 
