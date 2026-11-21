@@ -1,8 +1,9 @@
-import { serviciosHistoricos,
-        vehiculos,  
-        tipoServicio,
+import {
+    serviciosHistoricos,
+    vehiculos,
+    tipoServicio,
 
- } from "./Db._dicionarios.js";
+} from "./Db._dicionarios.js";
 
 //console.table(serviciosHistoricos);
 let lista_registros = listarTodo(serviciosHistoricos);
@@ -36,11 +37,21 @@ export function totalGeneral(datos) {
 
 export function promedio(datos) {
     //Joimar
-    if (datos.size === 0) {
-        return 0;
-    }
 
-    return totalGeneral(datos) / datos.size;
+    let promedio = totalGeneral(datos) / datos.size
+    if (datos.size === 0) {
+        return new Map(
+            [
+                ["Promedio", 0],
+            ]
+        );
+    };
+
+    return new Map(
+        [
+            ["Promedio", Math.round(promedio)]
+        ]
+    );
 }
 
 function registroMayor(datos) {
@@ -101,7 +112,11 @@ export function personasUnicas(datos) {
         personas.add(vehiculo.Numero_Tel);
     }
 
-    return personas.size;
+    return new Map(
+        [
+            ["Personas difirentes", personas.size]
+        ]
+    );
 }
 
 //Recurrentes lentos
@@ -167,7 +182,7 @@ function parQueSuma(datos, objetivo) {
     for (const registro of registros) {
         //console.log(registro.Monto);
         if (registro.Monto === valorObjetivo) {
-            if(parSumado.get("Registro_1") === null) {
+            if (parSumado.get("Registro_1") === null) {
                 parSumado.set("Registro_1", registro);
             } else {
                 parSumado.set("Registro_2", registro);
@@ -186,9 +201,9 @@ function parQueSuma(datos, objetivo) {
 // ---------- Zona de pruebas ----------
 //Funciones: Juan Cuartas
 mostrarRegistro(lista_registros);
-console.table(registroMayor(lista_registros)); 
+console.table(registroMayor(lista_registros));
 console.table(totalesPorCategoria(lista_registros));
-console.table(parQueSuma(lista_registros, 40000)); 
+console.table(parQueSuma(lista_registros, 40000));
 
 mostrarRegistro(new Set()); //Prueba array vacio, funcional.
 console.table(registroMayor(new Set())); //Prueba con array vacío, funcional devuelve null.
@@ -196,20 +211,21 @@ console.table(totalesPorCategoria(new Set())); //Prueba con array vacío, funcio
 console.table(parQueSuma(lista_registros, 0)); //Devuelve null o los dos valores, funcional.
 
 //Funciones: Jhoimar
-console.log(`Promedio: ${promedio(serviciosHistoricos)}`);
-console.log(`Recurrentes lento: ${JSON.stringify(recurrentesLento(serviciosHistoricos))}`);
-console.log(`Recurrentes rápido: ${JSON.stringify(recurrentesRapido(serviciosHistoricos))}`);
+console.table(promedio(serviciosHistoricos));
+console.table(recurrentesLento(serviciosHistoricos));
+console.table(recurrentesRapido(serviciosHistoricos));
 
-console.log(`Promedio sin servicios: ${promedio(new Set())}`); //Prueba con array vacío, funcional.
-console.log(`Recurrentes lento sin servicios: ${JSON.stringify(recurrentesLento(new Set()))}`); //Prueba con array vacío, funcional.
-console.log(`Recurrentes rápido sin servicios: ${JSON.stringify(recurrentesRapido(new Set()))}`); //Prueba con array vacío, funcional.
+console.table(promedio(new Set())); //Prueba con array vacío, funcional.
+console.table(recurrentesLento(new Set())); //Prueba con array vacío, funcional.
+console.table(recurrentesRapido(new Set())); //Prueba con array vacío, funcional.
 
 
 //Funciones: Lauren
-console.log(`Total: $${totalGeneral(serviciosHistoricos)}`); 
-console.log(`Personas diferentes: ${personasUnicas(vehiculos)}`);
+console.table({"Total general": totalGeneral(serviciosHistoricos)});
+console.table(personasUnicas(vehiculos));
 
-console.log(`Personas diferentes: ${personasUnicas(new Set())}`); // Prueba con array vacio, funcional.
-console.log(`Total: $${totalGeneral(new Set())}`); // Prueba con array vacío, funcional.
+console.table(totalGeneral(new Set())); // Prueba con array vacío, funcional.
+console.table(personasUnicas(new Set())); // Prueba con array vacio, funcional.
+
 
 //Funciones: Angel - Pendiente.
